@@ -1,5 +1,5 @@
 #!/bin/bash
-#purpose: how to migrate AWS sqs queues from one account to another account by aws cli and bash shell script
+#purpose: how to transfer multiple AWS sqs queues from one account to another account by aws cli and bash shell script
 #author: bablish jaiswal
 #contact: linux.cnf@gmail.com
 

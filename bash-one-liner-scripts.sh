@@ -19,3 +19,8 @@ cd target_location
 for i in $(ls) ; do cat /dev/null/ > $i ; done
 #below script to delete
 for i in * ; do cat rm -rfv $i ; done
+
+#how to download PDFs from multiple websites
+#note: listf is a file name with entries of all targeted websites.
+wget -c $(for website in $(cat listf); do     lynx -cache=0 -dump -listonly "$website" | awk '/.pdf$/{print $2}';done)
+

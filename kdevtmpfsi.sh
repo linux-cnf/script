@@ -2,6 +2,7 @@
 #Maintainer: Bablish Jaiswal
 #Purpose: How to Permanently Kill and Remove kdevtmpfsi or kinsing
 #note: also need to modify this script according to attack pattern because same attack will not be experience everytime. 
+#systemct pid service_name
 report=/var/log/incident.log
 if [  -f "$report" ]
 then

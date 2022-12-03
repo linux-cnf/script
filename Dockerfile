@@ -15,4 +15,4 @@ RUN chmod 044 /etc/sudoers.d/ubuntu
 USER ubuntu:ubuntu
 WORKDIR /home/ubuntu
 CMD ["/bin/bash"]
-#docker run -itd --privileged #type_here_target_image_id /usr/sbin/init #command to run systemctl inside docker container
+#docker run -itd --privileged #type_here_target_image_id /usr/sbin/init # command to run systemctl inside docker container

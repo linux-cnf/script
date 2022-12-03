@@ -1,5 +1,6 @@
 FROM ubuntu
 MAINTAINER Bablish Jaiswal
+#How to prevent ubuntu from being minimized
 #RUN apt-get install apt-utils -y
 ENV DEBIAN_FRONTEND noninteractive
 ENV TZ=Asia/Kolkata DEBIAN_FRONTEND=noninteractive

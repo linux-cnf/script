@@ -24,3 +24,25 @@ for i in * ; do cat rm -rfv $i ; done
 #note: listf is a file name with entries of all targeted websites.
 wget -c $(for website in $(cat listf); do     lynx -cache=0 -dump -listonly "$website" | awk '/.pdf$/{print $2}';done)
 
+#how to find all broken symbolic links recursively in any linux based OS
+b=$(find / -type l); for i in $(echo $b); do file $i ; done |grep -i broken 2> /dev/null
+
+#how to list the size of all existing cache-related folders.
+for i in $(find /  -iname '*cache*'); do du -sh $i ; done 2> /dev/null | grep 'G\|M\|K\|B'| nl
+
+#to list every type of file/folder/data/objects... which are hidden in linux
+sudo find / -iname '.*' 2> /dev/null|nl   
+#to list only hidden files recursively in linux
+sudo find / -type f -iname '.*' 2> /dev/null|nl
+#to list only hidden directories recursively in linux
+sudo find / -type d -iname '.*' 2> /dev/null|nl 
+
+#isting all enabled current hosted webiste in ubuntu apache.
+cd /etc/apache2/sites-enabled/ && echo -e "\nListing all enabled website and its home directory for server $(hostname -I):-\n$(cat $(ls) |grep -i 'ServerName\|DocumentRoot')\nReport Timestamp:- $(TZ='Asia/Kolkata' date)\n"
+
+#Vim can comment and uncomment multiple lines at once for specific lines range
+:se nu
+:7,13s/^/#
+#for uncomment, run below one command
+:7,13s/^#//
+

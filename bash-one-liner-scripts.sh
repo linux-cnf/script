@@ -46,6 +46,10 @@ cd /etc/apache2/sites-enabled/ && echo -e "\nListing all enabled website and its
 #for uncomment, run below one command
 :7,13s/^#//
 
-#this command will list all available commands with their one-liner intro respectively
+#this command will list all available commands with their one-liner intro respectively #for debian based linux OSs
 dpkg -L systemd | grep 'sbin\|bin' | awk -F "/" '{print $NF}' | xargs man | grep ' - ' 2> /dev/null
+
+#use below one liner command for listing a package's command: #for rpm based linux OSs
+rpm -ql systemd | grep -w 'bin\|sbin' | awk -F '/' '{print $NF}' | xargs man head | grep ' - ' | grep -vi 'No manual' 2> /dev/null 
+
 

@@ -45,3 +45,7 @@ cd /etc/apache2/sites-enabled/ && echo -e "\nListing all enabled website and its
 :7,13s/^/#
 #for uncomment, run below one command
 :7,13s/^#//
+
+#this command will list all available commands with their one-liner intro respectively
+dpkg -L systemd | grep 'sbin\|bin' | awk -F "/" '{print $NF}' | xargs man | grep ' - ' 2> /dev/null
+

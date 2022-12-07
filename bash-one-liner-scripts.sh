@@ -52,4 +52,6 @@ dpkg -L systemd | grep 'sbin\|bin' | awk -F "/" '{print $NF}' | xargs man | grep
 #use below one liner command for listing a package's command: #for rpm based linux OSs
 rpm -ql systemd | grep -w 'bin\|sbin' | awk -F '/' '{print $NF}' | xargs man head | grep ' - ' | grep -vi 'No manual' 2> /dev/null 
 
+#listing all the files recusrively with size of files of multiple folders. Note: Kindly change folder location according to your demand.
+/usr/bin/du -a /var/log /home/user/log |sort -nr |awk '{print $NF}'|while read l ;do echo "file $(du -csh $l|grep -vi total) " ;done|nl
 

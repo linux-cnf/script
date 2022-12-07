@@ -55,3 +55,6 @@ rpm -ql systemd | grep -w 'bin\|sbin' | awk -F '/' '{print $NF}' | xargs man hea
 #listing all the files recusrively with size of files of multiple folders. Note: Kindly change folder location according to your demand.
 /usr/bin/du -a /var/log /home/user/log |sort -nr |awk '{print $NF}'|while read l ;do echo "file $(du -csh $l|grep -vi total) " ;done|nl
 
+#find exclude tip is shown below:-
+#run below ls exclude option with find command as mentioned here. 
+find $(ls /var/www/html |grep  -v 'london\|tokyo' ) -type f 

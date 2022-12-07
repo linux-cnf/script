@@ -37,7 +37,7 @@ sudo find / -type f -iname '.*' 2> /dev/null|nl
 #to list only hidden directories recursively in linux
 sudo find / -type d -iname '.*' 2> /dev/null|nl 
 
-#isting all enabled current hosted webiste in ubuntu apache.
+#listing all enabled current hosted webiste in ubuntu apache.
 cd /etc/apache2/sites-enabled/ && echo -e "\nListing all enabled website and its home directory for server $(hostname -I):-\n$(cat $(ls) |grep -i 'ServerName\|DocumentRoot')\nReport Timestamp:- $(TZ='Asia/Kolkata' date)\n"
 
 #Vim can comment and uncomment multiple lines at once for specific lines range

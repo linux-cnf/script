@@ -1,5 +1,5 @@
 #how to install docker in ubuntu by bash script automation
-#author: bablish jaiswal
+#author: Bablish Jaiswal
 sudo apt update -y
 sudo apt -y install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
 sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/docker-archive-keyring.gpg

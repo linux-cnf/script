@@ -1,0 +1,18 @@
+---
+- name: cron module demo
+  hosts: prod
+  become: true
+  tasks:
+   - name: "cron demo"
+     ansible.builtin.cron:
+      name: "file access entry log" #crontab entry title must be here
+      state: present #give value  "absent" instead of "present" if needs to delete crontab entry
+      minute: "0,30"
+      hour: "*"
+      day: "*"
+      month: "*"
+      weekday: "*"
+      job: "/`usr/bin/python3 /root/filelog.py"
+      user: root
+#      disabled: true
+

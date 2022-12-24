@@ -5,7 +5,7 @@
 import requests,json,subprocess
 
 webhook_url = "Type your slack webhook URL here."
-slack_data = subprocess.getoutput("/bin/bash /root/slack/highalert.sh")
+slack_data = subprocess.getoutput("/bin/bash /root/slack/highalert.sh 2> /dev/null")
 if slack_data != "":
     data=json.dumps(slack_data)
     response = requests.post(webhook_url, json={"text":data}, headers={'Content-Type': 'application/json'})

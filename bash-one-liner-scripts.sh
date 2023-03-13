@@ -68,3 +68,7 @@ aws ec2 describe-instances --profile ec --region us-west-2   |grep -i 'instanceI
 #how to run multiple commands from one server in linux without using ansible.
 #Note: this is just a raw codes. can be polish upto production level script.
 for ip in $(cat hostsfile);do sshpass -p "type_your_password_here" ssh bablish.jaiswal-a@$ip -o LogLevel=error -t " echo TypePasswordHere |sudo -S head -n3 /etc/shadow" ;done | tee liveandpast.log
+
+#how to search multiple matched string in linux using input from a file
+cat search_string.txt | xargs grep -i -r -n --color=auto -e
+

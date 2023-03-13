@@ -64,3 +64,7 @@ aws iam list-users --profile ec |grep -i username > list_users ; cat list_users 
 
 #to list InstnaceID and public ip from aws ec2 using awscli
 aws ec2 describe-instances --profile ec --region us-west-2   |grep -i 'instanceID\|publicipaddress'
+
+#how to run multiple commands from one server in linux without using ansible.
+#Note: this is just a raw codes. can be polish upto production level script.
+for ip in $(cat hostsfile);do sshpass -p "type_your_password_here" ssh bablish.jaiswal-a@$ip -o LogLevel=error -t " echo TypePasswordHere |sudo -S head -n3 /etc/shadow" ;done | tee liveandpast.log

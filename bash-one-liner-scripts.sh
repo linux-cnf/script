@@ -72,3 +72,5 @@ for ip in $(cat hostsfile);do sshpass -p "type_your_password_here" ssh bablish.j
 #how to search multiple matched string in linux using input from a file
 cat search_string.txt | xargs grep -i -r -n --color=auto -e
 
+#ssl expiry date checker for multiple IP address at once
+(cat ip_list |while read i ; do echo "IP is $i:-"; echo | openssl s_client -servername $i -connect $i:443 2>/dev/null | openssl x509 -noout -dates ;echo "---" ;done) 2> /dev/null

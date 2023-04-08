@@ -74,3 +74,8 @@ cat search_string.txt | xargs grep -i -r -n --color=auto -e
 
 #ssl expiry date checker for multiple IP address at once
 (cat ip_list |while read i ; do echo "IP is $i:-"; echo | openssl s_client -servername $i -connect $i:443 2>/dev/null | openssl x509 -noout -dates ;echo "---" ;done) 2> /dev/null
+
+#Linux one-liner script to calculate the used memory percentage including cache memory:
+echo "$(awk '/^MemTotal/{t=$2}/^MemAvailable/{a=$2}END{print int((t-a)/t * 100)}' /proc/meminfo)%"
+
+

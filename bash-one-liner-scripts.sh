@@ -78,4 +78,5 @@ cat search_string.txt | xargs grep -i -r -n --color=auto -e
 #Linux one-liner script to calculate the used memory percentage including cache memory:
 echo "$(awk '/^MemTotal/{t=$2}/^MemAvailable/{a=$2}END{print int((t-a)/t * 100)}' /proc/meminfo)%"
 
-
+#Linux to check 11 months older logs for outage in CPU, memory, disk
+journalctl --since="11 months ago"|grep -Ei "CPU\|memory\|disk\|out of\|oom"

@@ -80,3 +80,7 @@ echo "$(awk '/^MemTotal/{t=$2}/^MemAvailable/{a=$2}END{print int((t-a)/t * 100)}
 
 #Linux to check 11 months older logs for outage in CPU, memory, disk
 journalctl --since="11 months ago"|grep -Ei "CPU\|memory\|disk\|out of\|oom"
+
+#how to recursively find latest modified files in multiple directories
+ls -ltr $(find /path/dir1 /path/dir2 -type f)
+

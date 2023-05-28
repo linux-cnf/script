@@ -84,3 +84,5 @@ journalctl --since="11 months ago"|grep -Ei "CPU\|memory\|disk\|out of\|oom"
 #how to recursively find latest modified files in multiple directories
 ls -ltr $(find /path/dir1 /path/dir2 -type f)
 
+#how to search specific string into all files in directory recursively for certain time period
+sudo find /var/log/* -type f -mmin -300 -exec grep -H --color=auto "error" {} +

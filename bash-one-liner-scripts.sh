@@ -86,3 +86,9 @@ ls -ltr $(find /path/dir1 /path/dir2 -type f)
 
 #how to search specific string into all files in directory recursively for certain time period
 sudo find /var/log/* -type f -mmin -300 -exec grep -H --color=auto "error" {} +
+
+#List all IP entries from specific directory along with file name of entry
+sudo grep -ER -o "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)" /var/log/*
+
+
+

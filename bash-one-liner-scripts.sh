@@ -90,5 +90,5 @@ sudo find /var/log/* -type f -mmin -300 -exec grep -H --color=auto "error" {} +
 #List all IP entries from specific directory along with file name of entry
 sudo grep -ER -o "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)" /var/log/*
 
-
-
+#Random token generator for random files.
+dd if=/dev/urandom count=1 bs=512 2> /dev/null  | sha512sum

@@ -92,3 +92,48 @@ sudo grep -ER -o "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[
 
 #Random token generator for random files.
 dd if=/dev/urandom count=1 bs=512 2> /dev/null  | sha512sum
+
+#Command for quickly creating larger multiple files with certain size in linux
+for i in {1..10};do fallocate -l 2G filename$i;done
+
+#Listing the largest file in a directory and its subdirectories?
+(sudo  du -a /var/log/ |sort -nr|head -n20 |awk '{print $NF}'|while read l ;do du -csh $l|grep -vi total;done ) 2> /dev/null
+
+#command to change permission of multiple folders recursively.
+chmod 777 -v $(find $PWD /home/poc/ /home/jaiswal -type d)
+
+#for a quick summarize access log. just run below commands.
+cat /var/log/apache2/access.log|awk '{print $1}'|sort -nr |uniq -c |sort -nr |head -n 25
+
+#listing all Security greoup with infomation like  groupName/ID,vpcID in aws
+aws ec2 describe-security-groups |grep 'GroupName\|VpcId\|GroupId'
+#output of listing all SG info from above, now can run below one liner script to fetch all VPC info
+aws ec2 describe-security-groups |grep 'GroupName\|VpcId\|GroupId' > list_sg_info.txt ; cat list_sg_info.txt|grep -i vpcid |sort -u |awk '{print $NF}'|tr '\"' ' '|while read vpcinfo; do  aws ec2 describe-vpcs --vpc-ids $vpcinfo|nl ; done
+
+#script inside crontab every minute and it will kill the virus kdevtmpfsi in a scripted way.
+kill -9 $((ps -aux | grep -i 'kdevtmpfsi\|kinsing\|kthreaddi') 2>/dev/null |grep -v grep |awk '{print $2}')
+
+#list all S3 buckets with their objects recursively, list bucket name and count objects also
+/usr/bin/sudo /usr/local/bin/aws s3 ls |awk '{print $NF}'| while read l;do echo -e "#######---$l objects---##########\n\n";/usr/bin/sudo /usr/local/bin/aws s3 ls $l|nl;done
+
+#can also run/check ping latency by below adhoc command in ansible
+ansible all -m shell -a "ping -c3 google.com"
+
+#Top command has batch mode to run for scripting or any command line programs. Kindly run below command in ansible with shell module.
+top -bco +%CPU -n1
+
+#command to find all broken symbolic links recursively in any linux based OS
+a=$(find / -type l); for i in $(echo $a); do file $i ; done |grep -i broken 2> /dev/null
+
+#list all the users who have sudo permissions and not
+for i in $(awk -F ':' '{print $1}' /etc/passwd ); do sudo -l -U $i ; done
+
+#one-liner command for user & password creation
+useradd himanshi ; echo -e "1234\n1234" | passwd himanshi
+
+#download all available pdf from multiple websites
+wget -c $(for website in $(cat websites_list); do     lynx -cache=0 -dump -listonly "$website" | awk '/.pdf$/{print $2}';done)
+
+#for password report of all existed users in linux sever
+for i in $(cat /etc/passwd | awk -F ':' '{print $1}'); do echo "##############" "$i" "############";chage -l $i; echo "##################################"; done | nl | less
+

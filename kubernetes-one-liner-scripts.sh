@@ -13,4 +13,5 @@ kubectl get pods --all-namespaces -o=jsonpath="{.items[*].spec.containers[*].ima
 #to list all downloaded and working images in kubernetes pods with their image size
 kubectl get pods --all-namespaces -o=jsonpath="{.items[*].spec.containers[*].image}" | tr -s '[[:space:]]' '\n' | sort -u | while read -r image; do size=$(docker images --format '{{.Repository}}:{{.Tag}} {{.Size}}' | grep "$image" | awk '{print $2}'); size_in_mb=$(echo "$size" | awk '{gsub(/[A-Za-z]/, "", $0); print $0 / 1024 / 1024}'); echo "$image ($size_in_mb MB)"; done
 
-
+#to list all running pods with their container name in kubernetes
+kubectl get pods|grep -i running|awk '{print $1}'|while read name; do cname=$(kubectl describe pods $name|grep -i 'container id' -B1|sed 's/://' |head -n1); echo "container name is$cname and pod name is $name" ; done

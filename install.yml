@@ -1,0 +1,19 @@
+- name: installing
+  hosts: prodserver
+  become: true
+  tasks:
+    - name: updating apt
+      apt:
+        update_cache: yes
+    - name: install packages
+      apt:
+        name: "{{ item }}"
+        state: latest
+      loop:
+        - nmap
+        - elinks
+        - youtube-dl
+      register: apt_output
+    - name: show the process
+      debug:
+        var: apt_output

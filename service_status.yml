@@ -1,0 +1,17 @@
+#A very short program for checking services using ansible
+- name: checking service status
+  hosts: www.linuxfoundation.org
+  tasks:
+  - name: checking service status
+    command: systemctl status "{{ item }}"
+    with_items:
+    - firewalld
+    - httpd
+    - vsftpd
+    - sshd
+    - postfix
+    register: result
+    ignore_errors: yes
+  - name: showing report
+    debug:
+     var: result

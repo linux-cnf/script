@@ -137,3 +137,5 @@ wget -c $(for website in $(cat websites_list); do     lynx -cache=0 -dump -listo
 #for password report of all existed users in linux sever
 for i in $(cat /etc/passwd | awk -F ':' '{print $1}'); do echo "##############" "$i" "############";chage -l $i; echo "##################################"; done | nl | less
 
+#inspecting all volumes in docker with one-liner
+docker volume ls -q|while read volume;do docker volume inspect $volume ;done

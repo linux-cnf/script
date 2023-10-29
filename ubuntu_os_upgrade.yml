@@ -1,0 +1,81 @@
+---
+- name: Check Available Disk Space minimum 10GB on / 
+  hosts: Our_Target_server
+  become: yes
+  gather_facts: yes
+  tasks:
+    - name: Get available disk space in GB
+      command: df -BG / | awk 'NR==2{print $4}' | tr -d 'G'
+      register: available_space
+
+    - name: Check if available space is greater than or equal to 10GB
+      set_fact:
+        run_playbook: "{{ available_space.stdout | int >= 10 }}"
+
+          
+- name: Upgrade Ubuntu from 18.04 to 22.04
+  hosts: our_target_server_IP
+  become: yes
+  tasks:
+    - name: Save dpkg -l output to /opt/ so that all the installed package with their version can save.
+      command: dpkg -l > /opt/dpkg_list_{{ ansible_date_time.date }}.txt
+
+    - name: Backup /etc/ folder on /opt
+      archive:
+        path: /etc/
+        dest: /opt/etc_backup_{{ ansible_date_time.date }}.tar.gz
+      ignore_errors: yes
+
+    - name: Backup systemctl list-units output for listing all running,stopped,failed..services
+      command: systemctl list-units
+      register: systemctl_list_units_result
+      changed_when: false
+      ignore_errors: yes
+
+    - name: Save systemctl list-units output to a file
+      copy:
+        content: "{{ systemctl_list_units_result.stdout_lines | join('\n') }}"
+        dest: /opt/systemctl_list_units_{{ ansible_date_time.date }}.txt
+      changed_when: false
+
+    - name: Update /etc/update-manager/release-upgrades #make sure that Versions are updated only upto LTS
+      lineinfile:
+        path: /etc/update-manager/release-upgrades
+        regexp: '^Prompt='
+        line: 'Prompt=lts'
+
+    - name: Update package cache
+      apt:
+        update_cache: yes
+
+    - name: exluding php and mysql packages from upgradation. note: we can also chnage package name here
+      apt:
+        name: "{{ item }}"
+        state: held
+      loop:
+        - php
+        - mysql-server
+      when: "'dist-upgrade' in dpkg_l_result.stdout"
+
+    - name: Perform the distribution upgrade
+      apt:
+        upgrade: dist
+      when: "'dist-upgrade' in dpkg_l_result.stdout"
+      ignore_errors: yes
+
+    - name: Perform the upgrade using do-release-upgrade
+      command: do-release-upgrade -f DistUpgradeViewNonInteractive
+      args:
+        creates: /var/log/dist-upgrade/main.log
+      environment:
+        DEBIAN_FRONTEND: noninteractive
+      when: "'dist-upgrade' in dpkg_l_result.stdout"
+
+    - name: Reboot the server
+      reboot:
+      when: "'dist-upgrade' in dpkg_l_result.stdout"
+
+    - name: Wait for the server to come back online
+      wait_for_connection:
+        timeout: 300
+
